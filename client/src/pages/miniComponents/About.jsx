@@ -43,7 +43,7 @@ const About = () => {
               <img
                 src={user?.avatar && user.avatar.url}
                 alt={user?.fullName}
-                className="rounded-2xl shadow-lg shadow-blue-500/20 border border-zinc-800 w-[260px] sm:w-[320px] md:w-[360px] lg:w-[400px] object-cover transition-transform duration-300 group-hover:scale-105"
+                className="rounded-2xl shadow-lg shadow-blue-500/20 border border-zinc-800 w-[260px] sm:w-[320px] md:w-[360px] lg:w-[400px] object-cover transition-transform duration-300 group-hover:scale-105 group-active:scale-105 group-focus:scale-105"
               />
             </div>
           )}

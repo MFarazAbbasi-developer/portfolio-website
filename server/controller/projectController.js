@@ -28,6 +28,7 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
   ) {
     return next(new ErrorHandler("Please Provide All Details!", 400));
   }
+  // First image
   const cloudinaryResponse = await cloudinary.uploader.upload(
     projectBanner.tempFilePath,
     { folder: "PORTFOLIO PROJECT IMAGES" }
@@ -36,6 +37,18 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
     console.error(
       "Cloudinary Error:",
       cloudinaryResponse.error || "Unknown Cloudinary error"
+    );
+    return next(new ErrorHandler("Failed to upload avatar to Cloudinary", 500));
+  }
+  // Second image
+  const cloudinaryResponse2 = await cloudinary.uploader.upload(
+    projectImage.tempFilePath,
+    { folder: "PORTFOLIO PROJECT IMAGES2" }
+  );
+  if (!cloudinaryResponse2 || cloudinaryResponse2.error) {
+    console.error(
+      "Cloudinary Error:",
+      cloudinaryResponse2.error || "Unknown Cloudinary error"
     );
     return next(new ErrorHandler("Failed to upload avatar to Cloudinary", 500));
   }
@@ -50,6 +63,10 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
     projectBanner: {
       public_id: cloudinaryResponse.public_id, // Set your cloudinary public_id here
       url: cloudinaryResponse.secure_url, // Set your cloudinary secure_url here
+    },
+    projectImage: {
+      public_id: cloudinaryResponse2.public_id, // Set your cloudinary public_id here
+      url: cloudinaryResponse2.secure_url, // Set your cloudinary secure_url here
     },
   });
   res.status(201).json({
@@ -69,6 +86,7 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
     projectLink: req.body.projectLink,
     gitRepoLink: req.body.gitRepoLink,
   };
+  // first image
   if (req.files && req.files.projectBanner) {
     const projectBanner = req.files.projectBanner;
     const project = await Project.findById(req.params.id);
@@ -85,6 +103,25 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
       url: newProjectImage.secure_url,
     };
   }
+  // second image
+  if (req.files && req.files.projectImage) {
+    const projectImage = req.files.projectImage;
+    const project = await Project.findById(req.params.id);
+    const projectImageId = project.projectImage.public_id;
+    await cloudinary.uploader.destroy(projectImageId);
+    const newProjectImage = await cloudinary.uploader.upload(
+      projectImage.tempFilePath,
+      {
+        folder: "PORTFOLIO PROJECT IMAGES2",
+      }
+    );
+    newProjectData.projectImage = {
+      public_id: newProjectImage.public_id,
+      url: newProjectImage.secure_url,
+    };
+  }
+
+
   const project = await Project.findByIdAndUpdate(
     req.params.id,
     newProjectData,

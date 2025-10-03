@@ -14,10 +14,9 @@ const Portfolio = () => {
   useEffect(() => {
     const getMyProjects = async () => {
       try {
-        const { data } = await axios.get(
-          `${API_URL}/project/getall`,
-          { withCredentials: true }
-        );
+        const { data } = await axios.get(`${API_URL}/project/getall`, {
+          withCredentials: true,
+        });
         setProjects(data.projects);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -27,7 +26,7 @@ const Portfolio = () => {
     };
     getMyProjects();
   }, []);
-
+  const [showDetail, setShowDetail] = useState(null);
   return (
     <div className="w-full flex flex-col gap-14">
       {/* Heading */}
@@ -43,93 +42,93 @@ const Portfolio = () => {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {loading ? (
-          // Skeletons while loading
-          Array(3)
-            .fill(0)
-            .map((_, i) => (
-              <div
-                key={i}
-                className="bg-[#0f172a] border border-[#1e293b] rounded-xl shadow-md p-5 animate-pulse"
-              >
-                <div className="w-full h-52 bg-gray-700 rounded-md mb-4"></div>
-                <div className="h-5 w-2/3 bg-gray-600 rounded-md mb-3"></div>
-                <div className="flex flex-wrap gap-2">
-                  {Array(4)
-                    .fill(0)
-                    .map((_, j) => (
-                      <div
-                        key={j}
-                        className="px-6 py-2 bg-gray-700 rounded-full"
-                      ></div>
-                    ))}
-                </div>
-              </div>
-            ))
-        ) : (
-          (viewAll ? projects : projects.slice(0, 3)).map((project, index) => (
-            <motion.div
-              key={project._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group bg-[#0f172a] border border-[#1e293b] rounded-xl overflow-hidden shadow-md 
-              hover:shadow-2xl hover:-translate-y-2 active:shadow-2xl active:-translate-y-2 focus:shadow-2xl focus:-translate-y-2 transition-all duration-300 cursor-pointer"
-            >
-              {/* Project Image */}
-              <Link
-                to={`/project/${project._id}`}
-                onClick={() =>
-                  window.scrollTo({ top: 0, behavior: "smooth" })
-                }
-                className="relative block"
-              >
-                <img
-                  src={pic}
-                  alt={project.title}
-                  className="w-full h-52 object-contain bg-white transition-transform duration-500 group-hover:scale-105 group-active:scale-105 group-focus:scale-105"
-                />
-
-                {/* Hover Overlay */}
+        {loading
+          ? // Skeletons while loading
+            Array(3)
+              .fill(0)
+              .map((_, i) => (
                 <div
-                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 group-active:opacity-100 group-focus:opacity-100 
-                  transition-opacity duration-300 flex flex-col items-center justify-center text-center px-4"
+                  key={i}
+                  className="bg-[#0f172a] border border-[#1e293b] rounded-xl shadow-md p-5 animate-pulse"
                 >
-                  <p className="text-sm text-gray-200 line-clamp-3 mb-4">
-                    {project.description}
-                  </p>
-                  <span
-                    className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition-all"
+                  <div className="w-full h-52 bg-gray-700 rounded-md mb-4"></div>
+                  <div className="h-5 w-2/3 bg-gray-600 rounded-md mb-3"></div>
+                  <div className="flex flex-wrap gap-2">
+                    {Array(4)
+                      .fill(0)
+                      .map((_, j) => (
+                        <div
+                          key={j}
+                          className="px-6 py-2 bg-gray-700 rounded-full"
+                        ></div>
+                      ))}
+                  </div>
+                </div>
+              ))
+          : (viewAll ? projects : projects.slice(0, 3)).map(
+              (project, index) => (
+                <motion.div
+                  key={project._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group bg-[#0f172a] border border-[#1e293b] rounded-xl overflow-hidden shadow-md 
+              hover:shadow-2xl hover:-translate-y-2 active:shadow-2xl active:-translate-y-2 focus:shadow-2xl focus:-translate-y-2 transition-all duration-300 cursor-pointer"
+                >
+                  {/* Project Image */}
+                  <Link
+                    to={`/project/${project._id}`}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className="relative block"
                   >
-                    View Details
-                  </span>
-                </div>
-              </Link>
+                    <img
+                      src={project.projectBanner?.url}
+                      alt={project.title}
+                      className="w-full h-52 object-contain bg-white transition-transform duration-500 group-hover:scale-105 group-active:scale-105 group-focus:scale-105"
+                    />
 
-              {/* Info Section (always visible) */}
-              <div className="p-5 space-y-3">
-                <h3 className="text-lg font-bold text-white">
-                  {project.title}
-                </h3>
-
-                {/* Tech badges */}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies
-                    ?.split(",")
-                    .slice(0, 8)
-                    .map((tech, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 text-xs bg-[#1e293b] text-gray-300 rounded-full border border-blue-500/30"
-                      >
-                        {tech}
+                    {/* Hover Overlay */}
+                    <div
+                      className={`absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 group-active:opacity-100 group-focus:opacity-100 
+                  transition-opacity duration-300 flex flex-col items-center justify-center text-center px-4 ${
+                    showDetail === index ? "opacity-100" : ""
+                  }`}
+                    >
+                      <p className="text-sm text-gray-200 line-clamp-3 mb-4">
+                        {project.description}
+                      </p>
+                      <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition-all">
+                        View Details
                       </span>
-                    ))}
-                </div>
-              </div>
-            </motion.div>
-          ))
-        )}
+                    </div>
+                  </Link>
+
+                  {/* Info Section (always visible) */}
+                  <div className="p-5 space-y-3" onClick={() => setShowDetail(index === showDetail ? null : index)}>
+                    <h3 className="text-lg font-bold text-white">
+                      {project.title}
+                    </h3>
+
+                    {/* Tech badges */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies
+                        ?.split(",")
+                        .slice(0, 8)
+                        .map((tech, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 text-xs bg-[#1e293b] text-gray-300 rounded-full border border-blue-500/30"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            )}
       </div>
 
       {/* Button */}

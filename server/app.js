@@ -19,12 +19,7 @@ const app = express();
 dotenv.config({ path: "./config/config.env" });
 
 app.use(
-  cors({
-    // origin: [process.env.PORTFOLIO_URL, process.env.DASHBOARD_URL],
-    origin: [process.env.PORTFOLIO_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(cookieParser());

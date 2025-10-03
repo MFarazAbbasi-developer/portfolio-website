@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Facebook, Instagram, Linkedin, Twitter, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../../config/config";
 
 const Footer = () => {
    const [user, setUser] = useState({});
@@ -10,7 +11,7 @@ const Footer = () => {
     const getMyProfile = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/user/portfolio/me",
+          `${API_URL}/user/portfolio/me`,
           { withCredentials: true }
         );
         setUser(data.user);

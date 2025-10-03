@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import pic from "./pic.png";
+import API_URL from "../config/config";
 
 const ProjectView = () => {
   const [title, setTitle] = useState("");
@@ -21,7 +22,7 @@ const ProjectView = () => {
   useEffect(() => {
     const getProject = async () => {
       await axios
-        .get(`http://localhost:4000/api/v1/project/get/${id}`, {
+        .get(`${API_URL}/project/get/${id}`, {
           withCredentials: true,
         })
         .then((res) => {

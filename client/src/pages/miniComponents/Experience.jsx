@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Briefcase } from "lucide-react";
+import API_URL from "../../config/config";
 
 const Experience = () => {
   const [experience, setExperience] = useState([]);
@@ -9,7 +10,7 @@ const Experience = () => {
     const getMyExperience = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/experience/getall",
+          `${API_URL}/experience/getall`,
           { withCredentials: true }
         );
         setExperience(data.experiences);

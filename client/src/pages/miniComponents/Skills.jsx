@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import API_URL from "../../config/config";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
@@ -8,7 +9,7 @@ const Skills = () => {
   useEffect(() => {
     const getMySkills = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/skill/getall",
+        `${API_URL}/skill/getall`,
         { withCredentials: true }
       );
       setSkills(data.skills);

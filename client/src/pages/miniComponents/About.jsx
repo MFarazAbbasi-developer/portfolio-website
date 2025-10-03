@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { User } from "lucide-react";
+import API_URL from "../../config/config";
 
 const About = () => {
   const [user, setUser] = useState({});
@@ -8,7 +9,7 @@ const About = () => {
   useEffect(() => {
     const getMyProfile = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/user/portfolio/me",
+        `${API_URL}/user/portfolio/me`,
         { withCredentials: true }
       );
       setUser(data.user);

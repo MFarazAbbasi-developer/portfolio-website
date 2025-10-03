@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import pic from "./pic.png";
+import API_URL from "../../config/config";
 
 const Portfolio = () => {
   const [viewAll, setViewAll] = useState(false);
@@ -12,7 +13,7 @@ const Portfolio = () => {
   useEffect(() => {
     const getMyProjects = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/project/getall",
+        `${API_URL}/project/getall`,
         { withCredentials: true }
       );
       setProjects(data.projects);

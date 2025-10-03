@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import API_URL from "../../config/config";
 
 
 const Certifications = () => {
@@ -11,7 +12,7 @@ const Certifications = () => {
   useEffect(() => {
     const getMyCertifications = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/certification/getall",
+        `${API_URL}/certification/getall`,
         { withCredentials: true }
       );
       setCertifications(data.certifications);

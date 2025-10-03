@@ -35,7 +35,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col items-start gap-4 ">
+    <div className="w-full flex flex-col items-start gap-4">
       {/* Online status */}
       <div className="flex items-center gap-2">
         <span className="bg-green-400 rounded-full h-3 w-3 animate-pulse"></span>
@@ -84,22 +84,22 @@ const Hero = () => {
           <>
             {user?.githubURL && (
               <Link to={user.githubURL} target="_blank">
-                <Github className="text-white w-7 h-7 hover:scale-110 transition-transform" />
+                <Github className="text-white w-7 h-7 transition-transform hover:scale-110 active:scale-95 focus:scale-95" />
               </Link>
             )}
             {user?.instagramURL && (
               <Link to={user.instagramURL} target="_blank">
-                <Instagram className="text-pink-500 w-7 h-7 hover:scale-110 transition-transform" />
+                <Instagram className="text-pink-500 w-7 h-7 transition-transform hover:scale-110 active:scale-95 focus:scale-95" />
               </Link>
             )}
             {user?.facebookURL && (
               <Link to={user.facebookURL} target="_blank">
-                <Facebook className="text-blue-800 w-7 h-7 hover:scale-110 transition-transform" />
+                <Facebook className="text-blue-800 w-7 h-7 transition-transform hover:scale-110 active:scale-95 focus:scale-95" />
               </Link>
             )}
             {user?.twitterURL && (
               <Link to={user.twitterURL} target="_blank">
-                <Twitter className="text-blue-500 w-7 h-7 hover:scale-110 transition-transform" />
+                <Twitter className="text-blue-500 w-7 h-7 transition-transform hover:scale-110 active:scale-95 focus:scale-95" />
               </Link>
             )}
           </>
@@ -117,7 +117,7 @@ const Hero = () => {
           <>
             {user?.linkedInURL && (
               <Link to={user.linkedInURL} target="_blank">
-                <Button className="rounded-2xl flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition cursor-pointer">
+                <Button className="rounded-2xl flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 active:scale-95 focus:scale-95 transition">
                   <Linkedin />
                   LinkedIn
                 </Button>
@@ -125,7 +125,7 @@ const Hero = () => {
             )}
             {user?.resume?.url && (
               <Link to={user.resume.url} target="_blank">
-                <Button className="rounded-2xl flex items-center gap-2 bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition cursor-pointer">
+                <Button className="rounded-2xl flex items-center gap-2 bg-white/20 backdrop-blur-md text-white hover:bg-white/30 active:scale-95 focus:scale-95 transition">
                   <ExternalLink />
                   Resume
                 </Button>

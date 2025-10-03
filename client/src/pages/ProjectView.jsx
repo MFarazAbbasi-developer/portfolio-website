@@ -59,7 +59,7 @@ const ProjectView = () => {
       <div className="w-full max-w-5xl mb-6 flex justify-start">
         <Button
           onClick={() => navigateTo("/")}
-          className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition cursor-pointer"
+          className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition cursor-pointer"
         >
           <ArrowLeft />
           Return to Portfolio
@@ -128,7 +128,7 @@ const ProjectView = () => {
                   <span
                     key={index}
                     className="px-4 py-2 bg-[#1e293b]/70 border border-blue-500/30 
-                  rounded-full text-sm font-medium hover:border-blue-500 transition"
+                  rounded-full text-sm font-medium hover:border-blue-500 active:border-blue-500 focus:border-blue-500 transition"
                   >
                     {tech}
                   </span>
@@ -170,7 +170,7 @@ const ProjectView = () => {
                   href={gitRepoLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline"
+                  className="text-blue-400 hover:underline active:underline focus:underline"
                 >
                   {gitRepoLink}
                 </a>
@@ -183,7 +183,7 @@ const ProjectView = () => {
                   href={projectLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-400 hover:underline"
+                  className="text-blue-400 hover:underline active:underline focus:underline"
                 >
                   {projectLink}
                 </a>

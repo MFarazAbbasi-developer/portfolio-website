@@ -67,7 +67,7 @@ const Timeline = () => {
           timeline.map((element) => (
             <div
               key={element._id}
-              className="relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/20 transition"
+              className="relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/20 active:shadow-blue-500/20 focus:shadow-blue-500/20transition"
             >
               {/* Year badge */}
               <div className="absolute -top-3 -left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">

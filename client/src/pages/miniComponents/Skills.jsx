@@ -75,8 +75,9 @@ const Skills = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                     className="flex items-center gap-3 px-5 py-3 bg-[#0f172a]/70 
-                    rounded-full border border-[#1e293b] hover:border-blue-500/50
-                    hover:bg-[#1e293b]/80 transition-all duration-300 shadow-sm"
+                    rounded-full border border-[#1e293b] hover:border-blue-500/50 focus:border-blue-500/50
+                    hover:bg-[#1e293b]/80 focus:bg-[#1e293b]/80 active:border-blue-500/50
+                    active:bg-[#1e293b]/80 transition-all duration-300 shadow-sm"
                   >
                     <img
                       src={skill.svg?.url}

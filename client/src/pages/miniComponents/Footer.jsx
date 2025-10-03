@@ -31,19 +31,19 @@ const Footer = () => {
       {/* Social Links */}
       <div className="flex gap-5">
   <Link to={user.githubURL} target="_blank">
-    <Github className="w-6 h-6 text-white hover:text-gray-400 transition-colors" />
+    <Github className="w-6 h-6 text-white hover:text-gray-400 active:text-gray-400 focus:text-gray-400 transition-colors" />
   </Link>
   <Link to={user.linkedInURL} target="_blank">
-    <Linkedin className="w-6 h-6 text-white hover:text-blue-500 transition-colors" />
+    <Linkedin className="w-6 h-6 text-white hover:text-blue-500 active:text-blue-500 focus:text-blue-500 transition-colors" />
   </Link>
   <Link to={user.twitterURL} target="_blank">
-    <Twitter className="w-6 h-6 text-white hover:text-sky-400 transition-colors" />
+    <Twitter className="w-6 h-6 text-white hover:text-sky-400 active:text-sky-400 focus:text-sky-400 transition-colors" />
   </Link>
   <Link to={user.facebookURL} target="_blank">
-    <Facebook className="w-6 h-6 text-white hover:text-blue-600 transition-colors" />
+    <Facebook className="w-6 h-6 text-white hover:text-blue-600 active:text-blue-600 focus:text-blue-600 transition-colors" />
   </Link>
   <Link to={user.instagramURL} target="_blank">
-    <Instagram className="w-6 h-6 text-white hover:text-pink-500 transition-colors" />
+    <Instagram className="w-6 h-6 text-white hover:text-pink-500 active:text-pink-500 focus:text-pink-500 transition-colors" />
   </Link>
 </div>
 

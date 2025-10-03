@@ -60,51 +60,28 @@ const About = () => {
             </div>
           ) : (
             <>
-              <p className="text-lg">
-                I’m{" "}
-                <span className="font-semibold text-white">
-                  {user?.fullName}
-                </span>
-                , a{" "}
-                <span className="text-blue-400 font-medium">
-                  Software Engineering
-                </span>{" "}
-                graduate from{" "}
-                <span className="font-medium text-blue-400">
-                  QUEST Nawabshah
-                </span>
-                . With a CGPA of{" "}
-                <span className="font-semibold text-white">3.88</span> and
-                securing{" "}
-                <span className="font-semibold text-white">2nd position</span>{" "}
-                in my department, I’ve built a strong foundation in modern
-                software development.
-              </p>
+  <p className="text-lg leading-snug text-gray-400">
+    Hi, I’m <span className="font-medium text-white">{user?.fullName}</span>, a <span className="font-medium text-blue-400">Software Engineering</span> graduate from QUEST Nawabshah. With a CGPA of 3.88 and 
+    2nd position in my department, I’ve built a strong foundation in modern 
+    software development and problem-solving.
+  </p>
 
-              <p className="text-lg">
-                My expertise lies in the{" "}
-                <span className="text-blue-400 font-medium">MERN stack</span>,
-                along with tools like{" "}
-                <span className="text-white font-medium">
-                  Tailwind CSS, Git/GitHub
-                </span>
-                , and REST APIs. Notably, I developed{" "}
-                <span className="font-semibold text-blue-400">
-                  AI HealthSense
-                </span>
-                , a MERN-based app integrated with AI-powered eye disease
-                prediction.
-              </p>
+  <p className="text-lg leading-snug text-gray-400 mt-2">
+    My core expertise lies in the <span className="font-medium text-blue-400">MERN stack</span>, complemented by experience in Tailwind CSS, 
+    Git/GitHub, and REST APIs. I’ve worked on full-stack projects that focus on building 
+    scalable, user-friendly applications. I’m passionate about continuous learning and 
+    growing as a <span className="font-medium text-blue-400">Full-Stack Developer</span> to contribute to impactful projects.
+  </p>
+</>
 
-              <p className="text-lg">
-                I’m passionate about building scalable, user-friendly
-                applications and continuously growing as a{" "}
-                <span className="text-blue-400 font-medium">
-                  Full-Stack Developer
-                </span>{" "}
-                to contribute to impactful projects.
-              </p>
-            </>
+
+
+
+
+
+
+
+
           )}
         </div>
       </div>

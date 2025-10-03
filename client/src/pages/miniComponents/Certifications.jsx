@@ -58,14 +58,14 @@ const Certifications = () => {
               <div
                 key={index}
                 onClick={() => setSelectedCert(cert)}
-                className="group relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                className="group relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 active:shadow-blue-500/30 focus:shadow-blue-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
               >
                 <h3 className="text-lg font-bold text-blue-400 mb-2">
                   {cert.title}
                 </h3>
                 <p className="text-gray-300 mb-1">{cert.issuer}</p>
                 <p className="text-gray-400 text-sm">{cert.date}</p>
-                <p className="mt-3 text-sm text-cyan-400 group-hover:underline">
+                <p className="mt-3 text-sm text-cyan-400 group-hover:underline group-active:underline group-focus:underline">
                   View Certificate
                 </p>
               </div>
@@ -78,7 +78,7 @@ const Certifications = () => {
           <div className="relative bg-gray-900 rounded-2xl p-4 max-w-3xl w-full">
             <button
               onClick={() => setSelectedCert(null)}
-              className="absolute top-3 right-3 text-white hover:text-red-400 transition"
+              className="absolute top-3 right-3 text-white hover:text-red-400 active:text-red-400 focus:text-red-400 transition"
             >
               <X size={24} />
             </button>
@@ -101,7 +101,7 @@ const Certifications = () => {
       {!loading && certs.length > 6 && (
         <div className="w-full text-center">
           <Button
-            className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition-all cursor-pointer"
+            className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition-all cursor-pointer"
             onClick={() => setViewAll(!viewAll)}
           >
             {viewAll ? "Show Less" : "Show More"}

@@ -74,7 +74,7 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               className="group bg-[#0f172a] border border-[#1e293b] rounded-xl overflow-hidden shadow-md 
-              hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
+              hover:shadow-2xl hover:-translate-y-2 active:shadow-2xl active:-translate-y-2 focus:shadow-2xl focus:-translate-y-2 transition-all duration-300 cursor-pointer"
             >
               {/* Project Image */}
               <Link
@@ -87,19 +87,19 @@ const Portfolio = () => {
                 <img
                   src={pic}
                   alt={project.title}
-                  className="w-full h-52 object-contain bg-white transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-52 object-contain bg-white transition-transform duration-500 group-hover:scale-105 group-active:scale-105 group-focus:scale-105"
                 />
 
                 {/* Hover Overlay */}
                 <div
-                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 
+                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 group-active:opacity-100 group-focus:opacity-100 
                   transition-opacity duration-300 flex flex-col items-center justify-center text-center px-4"
                 >
                   <p className="text-sm text-gray-200 line-clamp-3 mb-4">
                     {project.description}
                   </p>
                   <span
-                    className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-500 transition-all"
+                    className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition-all"
                   >
                     View Details
                   </span>
@@ -136,7 +136,7 @@ const Portfolio = () => {
       {!loading && projects.length > 3 && (
         <div className="w-full text-center">
           <Button
-            className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition-all"
+            className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 transition-all"
             onClick={() => setViewAll(!viewAll)}
           >
             {viewAll ? "Show Less" : "Show More"}

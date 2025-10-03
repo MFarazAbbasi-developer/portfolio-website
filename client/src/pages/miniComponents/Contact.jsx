@@ -85,7 +85,7 @@ const Contact = () => {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-48 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-2xl flex items-center justify-center gap-2"
+            className="w-full sm:w-48 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 active:from-blue-600 active:to-cyan-500 focus:from-blue-600 focus:to-cyan-500 text-white rounded-2xl flex items-center justify-center gap-2"
           >
             {loading ? (
               <svg

@@ -19,7 +19,12 @@ const app = express();
 dotenv.config({ path: "./config/config.env" });
 
 app.use(
-  cors()
+  cors({
+    // origin: [process.env.PORTFOLIO_URL, process.env.DASHBOARD_URL],
+    origin: [process.env.PORTFOLIO_URL, "https://muhammadfaraz.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
 );
 
 app.use(cookieParser());

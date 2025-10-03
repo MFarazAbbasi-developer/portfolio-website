@@ -17,14 +17,14 @@ const ProjectView = () => {
   const [deployed, setDeployed] = useState("");
   const [projectLink, setProjectLink] = useState("");
   const [projectBannerPreview, setProjectBannerPreview] = useState("");
+  const [loading, setLoading] = useState(true); // 👈 NEW state
   const { id } = useParams();
 
   useEffect(() => {
     const getProject = async () => {
+      setLoading(true); // start loading
       await axios
-        .get(`${API_URL}/project/get/${id}`, {
-          withCredentials: true,
-        })
+        .get(`${API_URL}/project/get/${id}`, { withCredentials: true })
         .then((res) => {
           const project = res.data.project;
           setTitle(project.title);
@@ -40,6 +40,9 @@ const ProjectView = () => {
           toast.error(
             error.response?.data?.message || "Failed to load project"
           );
+        })
+        .finally(() => {
+          setLoading(false); // stop loading
         });
     };
     getProject();
@@ -65,108 +68,129 @@ const ProjectView = () => {
 
       {/* Banner */}
       <div className="relative w-full max-w-5xl rounded-xl overflow-hidden shadow-lg bg-white">
-        <img
-          // src={projectBannerPreview || "/avatarHolder.jpg"}
-          src={pic || "/avatarHolder.jpg"}
-          alt={title}
-          className="w-full h- 72 object-contain bg-white"
-        />
-        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white text-center">
-            {title}
-          </h1>
-        </div>
+        {loading ? (
+          <div className="w-full h-72 bg-gray-300 animate-pulse"></div> // Skeleton
+        ) : (
+          <img
+            src={projectBannerPreview || pic || "/avatarHolder.jpg"}
+            alt={title}
+            className="w-full h-72 object-cover bg-white"
+          />
+        )}
+        {!loading && (
+          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white text-center">
+              {title}
+            </h1>
+          </div>
+        )}
       </div>
 
       {/* Content */}
       <div className="w-full max-w-4xl mt-12 space-y-12 text-gray-300">
-        {/* Description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <h2 className="text-2xl font-bold text-blue-400 mb-4">Description</h2>
-          <ul className="list-disc pl-6 space-y-2">
-            {descriptionList.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Technologies */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
-          <h2 className="text-2xl font-bold text-blue-400 mb-4">
-            Technologies
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {technologiesList.map((tech, index) => (
-              <span
-                key={index}
-                className="px-4 py-2 bg-[#1e293b]/70 border border-blue-500/30 
-                rounded-full text-sm font-medium hover:border-blue-500 transition"
-              >
-                {tech}
-              </span>
-            ))}
+        {loading ? (
+          // Skeleton loader for content
+          <div className="space-y-6 animate-pulse">
+            <div className="h-6 w-40 bg-gray-600 rounded"></div>
+            <div className="h-4 w-full bg-gray-700 rounded"></div>
+            <div className="h-4 w-3/4 bg-gray-700 rounded"></div>
+            <div className="h-4 w-1/2 bg-gray-700 rounded"></div>
           </div>
-        </motion.div>
-
-        {/* Stack & Deployment */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6"
-        >
-          <div>
-            <h2 className="text-2xl font-bold text-blue-400 mb-2">Stack</h2>
-            <p>{stack}</p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-blue-400 mb-2">Deployed</h2>
-            <p>{deployed}</p>
-          </div>
-        </motion.div>
-
-        {/* Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          className="space-y-4"
-        >
-          <div>
-            <h2 className="text-2xl font-bold text-blue-400 mb-2">
-              GitHub Repository
-            </h2>
-            <a
-              href={gitRepoLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
+        ) : (
+          <>
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
             >
-              {gitRepoLink}
-            </a>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-blue-400 mb-2">
-              Live Project
-            </h2>
-            <a
-              href={projectLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline"
+              <h2 className="text-2xl font-bold text-blue-400 mb-4">
+                Description
+              </h2>
+              <ul className="list-disc pl-6 space-y-2">
+                {descriptionList.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Technologies */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
             >
-              {projectLink}
-            </a>
-          </div>
-        </motion.div>
+              <h2 className="text-2xl font-bold text-blue-400 mb-4">
+                Technologies
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {technologiesList.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-[#1e293b]/70 border border-blue-500/30 
+                  rounded-full text-sm font-medium hover:border-blue-500 transition"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Stack & Deployment */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            >
+              <div>
+                <h2 className="text-2xl font-bold text-blue-400 mb-2">Stack</h2>
+                <p>{stack}</p>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-blue-400 mb-2">
+                  Deployed
+                </h2>
+                <p>{deployed}</p>
+              </div>
+            </motion.div>
+
+            {/* Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="space-y-4"
+            >
+              <div>
+                <h2 className="text-2xl font-bold text-blue-400 mb-2">
+                  GitHub Repository
+                </h2>
+                <a
+                  href={gitRepoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline"
+                >
+                  {gitRepoLink}
+                </a>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-blue-400 mb-2">
+                  Live Project
+                </h2>
+                <a
+                  href={projectLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline"
+                >
+                  {projectLink}
+                </a>
+              </div>
+            </motion.div>
+          </>
+        )}
       </div>
     </div>
   );

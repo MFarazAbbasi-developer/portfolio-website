@@ -4,14 +4,21 @@ import API_URL from "../../config/config";
 
 const Timeline = () => {
   const [timeline, setTimeline] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getMyTimeline = async () => {
-      const { data } = await axios.get(
-        `${API_URL}/timeline/getall`,
-        { withCredentials: true }
-      );
-      setTimeline(data.timelines);
+      try {
+        const { data } = await axios.get(
+          `${API_URL}/timeline/getall`,
+          { withCredentials: true }
+        );
+        setTimeline(data.timelines);
+      } catch (error) {
+        console.error("Error fetching timeline:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     getMyTimeline();
   }, []);
@@ -20,15 +27,43 @@ const Timeline = () => {
     <div className="w-full flex flex-col gap-14">
       {/* Heading */}
       <div className="relative text-center">
-        <h1 className="text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] 
-          font-extrabold text-white tracking-[10px]">
+        <h1
+          className="text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] 
+          font-extrabold text-white tracking-[10px]"
+        >
           EDUCATION
         </h1>
         <span className="absolute left-1/2 -translate-x-1/2 bottom-[-10px] w-28 h-[3px] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
       </div>
 
       <div className="grid gap-6 md:gap-8">
-        {timeline &&
+        {loading ? (
+          // Skeletons while loading
+          <>
+            {Array(3)
+              .fill(0)
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg animate-pulse"
+                >
+                  {/* Fake Year badge */}
+                  <div className="absolute -top-3 -left-3 h-6 w-20 bg-blue-700/50 rounded-full"></div>
+
+                  {/* Fake Title */}
+                  <div className="h-5 w-40 bg-gray-600 rounded-md mb-3"></div>
+
+                  {/* Fake Description */}
+                  <div className="space-y-2">
+                    <div className="h-4 w-full bg-gray-700 rounded-md"></div>
+                    <div className="h-4 w-3/4 bg-gray-700 rounded-md"></div>
+                    <div className="h-4 w-5/6 bg-gray-700 rounded-md"></div>
+                  </div>
+                </div>
+              ))}
+          </>
+        ) : (
+          timeline &&
           timeline.map((element) => (
             <div
               key={element._id}
@@ -50,7 +85,8 @@ const Timeline = () => {
                 {element.description}
               </p>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );

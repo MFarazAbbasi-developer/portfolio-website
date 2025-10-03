@@ -5,6 +5,7 @@ import API_URL from "../../config/config";
 
 const Experience = () => {
   const [experience, setExperience] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getMyExperience = async () => {
@@ -16,6 +17,8 @@ const Experience = () => {
         setExperience(data.experiences);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     getMyExperience();
@@ -27,13 +30,26 @@ const Experience = () => {
       <div className="relative text-center">
         <h1 className="text-[2rem] sm:text-[2.75rem] md:text-[3rem] lg:text-[3.8rem] 
           font-extrabold text-white tracking-[10px]">
-            EXPERIENCE
+          EXPERIENCE
         </h1>
         <span className="absolute left-1/2 -translate-x-1/2 bottom-[-10px] w-28 h-[3px] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
       </div>
 
       <div className="grid gap-6 md:gap-8">
-        {experience && experience.length > 0 ? (
+        {loading ? (
+          // Skeleton loaders
+          Array(2).fill(0).map((_, i) => (
+            <div
+              key={i}
+              className="relative bg-gray-900/40 border border-gray-700 rounded-2xl p-6 shadow-md animate-pulse"
+            >
+              <div className="absolute -top-3 -left-3 bg-gray-700 h-6 w-24 rounded-full"></div>
+              <div className="h-6 w-40 bg-gray-700 rounded-md mb-4"></div>
+              <div className="h-4 w-full bg-gray-700 rounded-md mb-2"></div>
+              <div className="h-4 w-5/6 bg-gray-700 rounded-md"></div>
+            </div>
+          ))
+        ) : experience && experience.length > 0 ? (
           experience.map((element) => (
             <div
               key={element._id}
@@ -52,11 +68,15 @@ const Experience = () => {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-300 leading-relaxed text-justify">{element.description}</p>
+              <p className="text-gray-300 leading-relaxed text-justify">
+                {element.description}
+              </p>
             </div>
           ))
         ) : (
-          <p className="text-gray-400">No experience entries found.</p>
+          <p className="text-gray-400 text-center italic">
+            No experience entries found.
+          </p>
         )}
       </div>
     </div>

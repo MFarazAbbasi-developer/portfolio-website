@@ -4,52 +4,31 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import API_URL from "../../config/config";
 
-
 const Certifications = () => {
   const [certs, setCertifications] = useState([]);
   const [viewAll, setViewAll] = useState(false);
+  const [loading, setLoading] = useState(true); // <-- NEW state
+  const [selectedCert, setSelectedCert] = useState(null);
 
   useEffect(() => {
     const getMyCertifications = async () => {
-      const { data } = await axios.get(
-        `${API_URL}/certification/getall`,
-        { withCredentials: true }
-      );
-      setCertifications(data.certifications);
+      try {
+        const { data } = await axios.get(
+          `${API_URL}/certification/getall`,
+          { withCredentials: true }
+        );
+        setCertifications(data.certifications);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false); // <-- stop skeleton after fetch
+      }
     };
     getMyCertifications();
   }, []);
-  const certifications = [
-    {
-      title: "Front-End Developer Specialization",
-      issuer: "Meta | Coursera",
-      date: "Aug 2025",
-      image: "/certificates/meta-frontend.jpg",
-    },
-    {
-      title: "Database Engineer Specialization",
-      issuer: "Meta | Coursera",
-      date: "July 2025",
-      image: "/certificates/meta-database.jpg",
-    },
-    {
-      title: "UX Design Specialization",
-      issuer: "Google | Coursera",
-      date: "June 2025",
-      image: "/certificates/google-ux.jpg",
-    },
-    {
-      title: "Web Development",
-      issuer: "NFTP | Govt of Pakistan",
-      date: "June 2025",
-      image: "/certificates/nftp-web.jpg",
-    },
-  ];
-
-  const [selectedCert, setSelectedCert] = useState(null);
 
   return (
-    <div className="w-full flex flex-col gap-14 px-4 sm:px-6 lg:px-8">
+    <div className="w-full flex flex-col gap-14">
       {/* Heading */}
       <div className="relative text-center">
         <h1
@@ -63,22 +42,34 @@ const Certifications = () => {
 
       {/* Certifications Grid */}
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {(viewAll ? certs : certs.slice(0, 6)).map((cert, index) => (
-          <div
-            key={index}
-            onClick={() => setSelectedCert(cert)}
-            className="group relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
-          >
-            <h3 className="text-lg font-bold text-blue-400 mb-2  transition-colors">
-              {cert.title}
-            </h3>
-            <p className="text-gray-300 mb-1">{cert.issuer}</p>
-            <p className="text-gray-400 text-sm">{cert.date}</p>
-            <p className="mt-3 text-sm text-cyan-400 group-hover:underline">
-              View Certificate
-            </p>
-          </div>
-        ))}
+        {loading
+          ? // Skeleton loader
+            Array.from({ length: 6 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="animate-pulse bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-md"
+              >
+                <div className="h-5 w-3/4 bg-gray-700 rounded mb-3"></div>
+                <div className="h-4 w-1/2 bg-gray-700 rounded mb-2"></div>
+                <div className="h-4 w-1/4 bg-gray-700 rounded"></div>
+              </div>
+            ))
+          : (viewAll ? certs : certs.slice(0, 6)).map((cert, index) => (
+              <div
+                key={index}
+                onClick={() => setSelectedCert(cert)}
+                className="group relative bg-gray-900/40 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              >
+                <h3 className="text-lg font-bold text-blue-400 mb-2">
+                  {cert.title}
+                </h3>
+                <p className="text-gray-300 mb-1">{cert.issuer}</p>
+                <p className="text-gray-400 text-sm">{cert.date}</p>
+                <p className="mt-3 text-sm text-cyan-400 group-hover:underline">
+                  View Certificate
+                </p>
+              </div>
+            ))}
       </div>
 
       {/* Modal for Certificate Preview */}
@@ -107,16 +98,16 @@ const Certifications = () => {
       )}
 
       {/* Button */}
-            {certs.length > 6 && (
-              <div className="w-full text-center">
-                <Button
-                  className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition-all cursor-pointer"
-                  onClick={() => setViewAll(!viewAll)}
-                >
-                  {viewAll ? "Show Less" : "Show More"}
-                </Button>
-              </div>
-            )}
+      {!loading && certs.length > 6 && (
+        <div className="w-full text-center">
+          <Button
+            className="px-8 py-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 transition-all cursor-pointer"
+            onClick={() => setViewAll(!viewAll)}
+          >
+            {viewAll ? "Show Less" : "Show More"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
